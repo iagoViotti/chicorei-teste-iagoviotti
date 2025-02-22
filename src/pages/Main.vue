@@ -1,19 +1,10 @@
-<script setup>
-import { ref } from 'vue';
-import { generateProducts } from '../utils/mocks';
-
-const products = ref(generateProducts(20));
-
-const print = () => {
-  console.log(products.value);
-};
-
-</script>
-
-
 <template>
   <main>
-    <h1>Products</h1>
+    <select v-model='selectedCategory' @change='navToCategory'>
+      <option value='shirts' selected>Shirts</option>
+      <option value='pants'>Pants</option>
+      <option value='accessories'>Accessories</option>
+    </select>
     <button @click="print">Print</button>
     <section>
       <div v-for="product in products" :key="product.id" class="grid-cell">
@@ -29,6 +20,43 @@ const print = () => {
     </section>
   </main>
 </template>
+
+<script setup>
+import { ref, computed, watch } from 'vue';
+import { generateProducts } from '../utils/mocks';
+import { useRouter, useRoute } from 'vue-router';
+
+const router = useRouter();
+const route = useRoute();
+
+// "API call"
+const shirts = ref(generateProducts(10, 'shirts'));
+const pants = ref(generateProducts(10, 'pants'));
+const accessories = ref(generateProducts(10, 'accessories'));
+
+const products = computed(() => {
+  if (selectedCategory.value === 'shirts') return shirts.value;
+  if (selectedCategory.value === 'pants') return pants.value
+  if (selectedCategory.value === 'accessories') return accessories.value;
+  return shirts.value;
+});
+// "API call"
+
+const selectedCategory = ref(route.params.category || 'shirts');
+
+const navToCategory = () => {
+  router.push(`/${selectedCategory.value}`);
+};
+
+watch(() => route.params.category, (newCategory) => {
+  selectedCategory.value = newCategory;
+});
+
+const print = () => {
+  console.log(products.value);
+};
+
+</script>
 
 <style scoped>
 main {
@@ -103,5 +131,4 @@ small {
   align-self: flex-end;
   font-weight: bold;
 }
-
 </style>

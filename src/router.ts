@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
-  {path: "/", component: () => import("./pages/Main.vue")},
+  {path: "/",redirect: "/shirts"},
+  {path: "/:category", component: () => import("./pages/Main.vue")},
+  // {path: "/:category", component: () => import("./pages/Category.vue")},
   {path: "/checkout", component: () => import("./pages/Cart.vue")},
 ]
 

@@ -1,15 +1,24 @@
 import { faker } from '@faker-js/faker';
-const generateProduct = () => {
+
+type Category = 'shirts' | 'pants' | 'accessories';
+
+const generateProduct = (category: Category) => {
   return {
     id: faker.number.int(),
     name: faker.commerce.productName(),
     price: faker.commerce.price(),
-    category: faker.commerce.department(),
     image: faker.image.urlLoremFlickr({ width: 200, height: 200 }),
     description: faker.commerce.productDescription(),
+    category,
   };
 }
 
-export const generateProducts = (n: number) => {
-  return faker.helpers.multiple(generateProduct, { count: n });
+export const generateProducts = (n: number, category: Category) => {
+  if (category) {
+    return Array.from({ length: n }, () => generateProduct(category));
+  }
+  return Array.from({ length: n }, () => {
+    const category = faker.helpers.shuffle(['shirt', 'pants', 'accessories'])[0];
+    return generateProduct(category as Category);
+  });
 };
