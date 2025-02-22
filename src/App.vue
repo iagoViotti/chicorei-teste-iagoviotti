@@ -23,13 +23,16 @@ const toggleSidebar = () => {
 header {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  /* transition: all 0.3s; */
 }
 
 header button {
   justify-self: flex-start;
-  /* transition: all 0.3s; */
+}
+
+header h1 {
+  margin: 0.5em 0.5em;
+  flex: 1;
+  text-align: end;
 }
 
 .page {
@@ -37,4 +40,5 @@ header button {
   flex-direction: column;
   width: 100%;
 }
+
 </style>
