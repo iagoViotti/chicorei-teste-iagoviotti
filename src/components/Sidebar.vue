@@ -10,7 +10,7 @@ export default {
   <transition v-if="isSidebarOpen" name="slide" mode="out-in">
     <div class="navbar">
       <router-link to="/">Home</router-link>
-      <router-link to="/checkout">Cart</router-link>
+      <router-link to="/checkout">Checkout</router-link>
     </div>
   </transition>
 </template>
