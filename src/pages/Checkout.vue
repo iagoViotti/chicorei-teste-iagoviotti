@@ -1,48 +1,168 @@
 <template>
-  <form @submit.prevent="handleCheckout">
-    <h1>Finalização do pedido</h1>
-    <div>
-      <label for="name">E-mail:</label>
-      <input required type="email" />
-      <label for="telephone">Telefone:</label>
-      <input required type="tel" />
+  <main class="checkout-page">
+    <form @submit.prevent="handleCheckout">
+      <h1>Finalização do pedido</h1>
+      <div>
+        <label for="name">E-mail:
+          <input required type="email" />
+        </label>
+        <label for="telephone">Telefone:
+          <input required type="tel" v-model="cellphone" @input="onlyNumberFilter"/>
+        </label>
+      </div>
+      <div class="delivery-info">
+        <h2>Informações de entrega</h2>
+        <label for="cep">CEP:
+          <input required type="text" v-model="cepValue" @input="onlyNumberFilter" maxlength="8" />
+          <button type="button" @click="searchCEP">Buscar CEP</button>
+        </label>
+        <label for="rua">Rua:
+          <input required type="text" v-model="address.street" />
+        </label>
+        <label for="numero">Número:
+          <input required type="text" />
+        </label>
+        <label for="bairro">Bairro:
+          <input required type="text" v-model="address.neighborhood" />
+        </label>
+        <label for="cidade">Cidade:
+          <input required type="text" v-model="address.city" />
+        </label>
+        <label for="estado">Estado:
+          <input required type="text" v-model="address.state" />
+        </label>
+      </div>
+      <div class="payment-info">
+        <h2>Informações de pagamento</h2>
+        <label for="card">Número do cartão:
+          <input required type="text" @input="onlyNumberFilter" />
+        </label>
+        <label for="titular">Titular do cartão:
+          <input required type="text" />
+        </label>
+        <label for="validade">Validade:
+          <input required type="month" />
+        </label>
+        <label for="cvv">CVV:
+          <input required type="text" maxlength="3" @input="onlyNumberFilter"/>
+        </label>
+      </div>
+      <button>Finalizar pedido</button>
+    </form>
+    <div class="cart-container">
+      <h2>Sacola</h2>
+      <section>
+        <div v-for="product in products" :key="product.id">
+          <div class="product-card">
+            <img :src="product.image" alt="product.name" />
+            <div class="info">
+              <h3>{{ product.name }}</h3>
+              <p>R$ {{ product.price }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-    <div>
-      <h2>Informações de entrega</h2>
-      <label for="cep">CEP:</label>
-      <input required type="text" />
-      <button>Buscar CEP</button>
-      <label for="rua">Rua:</label>
-      <input required type="text" />
-      <label for="numero">Número:</label>
-      <input required type="text" />
-      <label for="bairro">Bairro:</label>
-      <input required type="text" />
-      <label for="cidade">Cidade:</label>
-      <input required type="text" />
-      <label for="estado">Estado:</label>
-      <input required type="text" />
-    </div>
-    <div>
-      <h2>Informações de pagamento</h2>
-      <label for="card">Número do cartão:</label>
-      <input required type="text" />
-      <label for="titular">Titular do cartão:</label>
-      <input required type="text" />
-      <label for="validade">Validade:</label>
-      <input required type="text" />
-      <label for="cvv">CVV:</label>
-      <input required type="text" />
-    </div>
-    <button>Finalizar pedido</button>
-  </form>
+  </main>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import cep from 'cep-promise';
+import { generateProducts } from '../utils/mocks';
+
+const cellphone = ref('');
+const cepValue = ref('');
+const address = ref({
+  street: '',
+  neighborhood: '',
+  city: '',
+  state: '',
+});
+
+const products = ref(generateProducts(10))
 
 const handleCheckout = () => {
   console.log('Pedido finalizado!');
 };
 
+const searchCEP = async () => {
+  try {
+    const response = await cep(cepValue.value);
+    address.value = {
+      street: response.street,
+      neighborhood: response.neighborhood,
+      city: response.city,
+      state: response.state,
+    };
+    console.log(address.value);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const onlyNumberFilter = (e) => {
+  e.target.value = e.target.value.replace(/\D/g, '');
+};
+
 </script>
+
+<style scoped>
+
+.checkout-page {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  columns: 2;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+form label {
+  display: flex;
+  justify-content: space-between;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-container {
+  overflow-y: scroll;
+  height: 90%;
+  /* background-color: red; */
+}
+
+.product-card {
+  display: flex;
+  border-radius: 5px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.product-card img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 5px 5px 0 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+</style>

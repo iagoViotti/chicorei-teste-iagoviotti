@@ -5,7 +5,7 @@
       <option value='pants'>Pants</option>
       <option value='accessories'>Accessories</option>
     </select>
-    <button @click="print">Print</button>
+    <!-- <button @click="print">Print</button> -->
     <section>
       <div v-for="product in products" :key="product.id" class="grid-cell">
         <div class="product-card">
@@ -29,7 +29,7 @@ import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 
-// "API call"
+// fake API call
 const shirts = ref(generateProducts(10, 'shirts'));
 const pants = ref(generateProducts(10, 'pants'));
 const accessories = ref(generateProducts(10, 'accessories'));
@@ -40,7 +40,7 @@ const products = computed(() => {
   if (selectedCategory.value === 'accessories') return accessories.value;
   return shirts.value;
 });
-// "API call"
+// fake API call
 
 const selectedCategory = ref(route.params.category || 'shirts');
 
@@ -63,14 +63,15 @@ main {
   padding: 1em;
   box-sizing: border-box;
   overflow-y: scroll;
+  width: 100%;
 }
 
 section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 1.2em;
-  flex-wrap: wrap;
-  justify-content: center;
+  /* overflow-y: scroll; */
+  height: 100%;
 }
 
 .grid-cell {

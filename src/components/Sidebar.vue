@@ -30,4 +30,5 @@ export default {
   text-decoration: none;
   padding: 10px;
 }
+
 </style>

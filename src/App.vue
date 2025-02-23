@@ -12,10 +12,12 @@ const toggleSidebar = () => {
   <Sidebar :is-sidebar-open="isSidebarOpen" />
   <div class="page">
     <header>
-      <button @click='toggleSidebar' >Click me</button>
+      <button @click='toggleSidebar'>Click me</button>
       <h1>Francisco, O Monarca</h1>
     </header>
-    <router-view />
+    <main class="content">
+      <router-view />
+    </main>
   </div>
 </template>
 
@@ -39,6 +41,13 @@ header h1 {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100vh;
 }
 
+.content {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  overflow: hidden;
+}
 </style>
