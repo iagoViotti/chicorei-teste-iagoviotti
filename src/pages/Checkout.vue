@@ -35,7 +35,7 @@
       <div class="payment-info">
         <h2>Informações de pagamento</h2>
         <label for="card">Número do cartão:
-          <input required type="text" @input="onlyNumberFilter" maxlength="16" minlength="16"/>
+          <input required type="text" @input="onlyNumberFilter" maxlength="16" minlength="16" />
         </label>
         <label for="titular">Titular do cartão:
           <input required type="text" />
@@ -52,12 +52,17 @@
     <div class="cart-container">
       <h2>Sacola</h2>
       <section>
-        <div v-for="product in products" :key="product.id">
+        <div v-for="product in cart" :key="product.id">
           <div class="product-card">
             <img :src="product.image" alt="product.name" />
             <div class="info">
               <h3>{{ product.name }}</h3>
               <p>R$ {{ product.price }}</p>
+            </div>
+            <div class="button-container">
+              <button @click="addProduct(product)">+</button>
+              <span>{{ product.quantity }}</span>
+              <button @click="removeProduct(product)" >-</button>
             </div>
           </div>
         </div>
@@ -70,7 +75,10 @@
 import { ref } from 'vue';
 import cep from 'cep-promise';
 import { generateProducts } from '../utils/mocks';
+import { cartMock } from '../utils/cartMock';
+const { cart, removeProduct, addProduct } = cartMock;
 
+const products = ref();
 const cellphone = ref('');
 const cepValue = ref('');
 const address = ref({
@@ -79,8 +87,6 @@ const address = ref({
   city: '',
   state: '',
 });
-
-const products = ref(generateProducts(10))
 
 const handleCheckout = () => {
   console.log('Pedido finalizado!');
@@ -140,15 +146,44 @@ form div {
 
 .product-card {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
   border-radius: 5px;
   box-sizing: border-box;
   width: 100%;
+  margin: 1em 0;
+  box-sizing: border-box;
 }
 
 .product-card img {
   max-width: 100px;
   max-height: 100px;
   border-radius: 5px 5px 0 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  text-align: start;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 1em;
+}
+
+h3 {
+  margin: 0;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-grow: 0;
+  padding: 0 1em;
 }
 
 ::-webkit-scrollbar {
