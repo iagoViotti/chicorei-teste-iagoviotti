@@ -7,13 +7,13 @@
           <input required type="email" />
         </label>
         <label for="telephone">Telefone:
-          <input required type="tel" v-model="cellphone" @input="onlyNumberFilter"/>
+          <input required type="tel" v-model="cellphone" v-mask="'(##)#####-####'" />
         </label>
       </div>
       <div class="delivery-info">
         <h2>Informações de entrega</h2>
         <label for="cep">CEP:
-          <input required type="text" v-model="cepValue" @input="onlyNumberFilter" maxlength="8" />
+          <input required type="text" v-model="cepValue" v-mask="'#####-###'" />
           <button type="button" @click="searchCEP">Buscar CEP</button>
         </label>
         <label for="rua">Rua:
@@ -35,16 +35,16 @@
       <div class="payment-info">
         <h2>Informações de pagamento</h2>
         <label for="card">Número do cartão:
-          <input required type="text" @input="onlyNumberFilter" />
+          <input required type="text" @input="onlyNumberFilter" maxlength="16" minlength="16"/>
         </label>
         <label for="titular">Titular do cartão:
           <input required type="text" />
         </label>
         <label for="validade">Validade:
-          <input required type="month" />
+          <input required v-mask="'##/##'" type="text" />
         </label>
         <label for="cvv">CVV:
-          <input required type="text" maxlength="3" @input="onlyNumberFilter"/>
+          <input required type="text" maxlength="3" @input="onlyNumberFilter" />
         </label>
       </div>
       <button>Finalizar pedido</button>
@@ -108,7 +108,6 @@ const onlyNumberFilter = (e) => {
 </script>
 
 <style scoped>
-
 .checkout-page {
   display: flex;
   width: 100%;
@@ -164,5 +163,4 @@ form div {
 ::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
-
 </style>
