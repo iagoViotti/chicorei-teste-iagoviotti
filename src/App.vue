@@ -3,7 +3,7 @@
   <Sidebar :is-sidebar-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
   <div class="page">
     <header>
-      <h1>e-commerce</h1>
+      <h1>ChicoChico</h1>
       <button v-if="!isSidebarOpen" @click='toggleSidebar'><img :src="menu" alt="Menu" /></button>
     </header>
     <main>
@@ -41,6 +41,8 @@ header h1 {
   margin: 0.5em 1em;
   text-align: end;
   color: @primary-color;
+  font-family: Bree Serif, serif;
+  font-size: 2.2em;
 }
 
 header button {
