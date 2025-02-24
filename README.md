@@ -3,7 +3,7 @@
 ## Overview
 Esse projeto é uma aplicação de frontend que acomoda duas possíveis páginas de um e-commerce (uma página de produtos e uma página de checkout). A aplicação foi feita usando Vue.js e inclui features como filtro de produtos (via roteamento e falsas chamadas a APIs), edição de carrinhno e validação de campos de input.
 
-## Técnilogias usadas
+## Tecnologias usadas
 - Vue.js
 - Vite
 - Less
@@ -12,7 +12,7 @@ Esse projeto é uma aplicação de frontend que acomoda duas possíveis páginas
 
 ## Instruções de instalação
 
-### Prerequisitos
+### Pré-requisitos
 -Node.js (versão 14 ou maior)
 -npm (versão 6 ou maior)
 
@@ -23,31 +23,17 @@ git clone git@github.com:iagoViotti/chicorei-teste-iagoviotti.git
 cd chicorei-teste-iagoviotti
 ```
 
-###Instale as dependências
+### Instale as dependências
 
 ```bash
 npm install
 ```
 
-###Rode o projeto
+### Rode o projeto
 
 ```bash
 npm run dev
 ```
-
-###Estrutura do projeto
-
-src/
-├── assets/             # Static assets (images, icons, etc.)
-├── components/         # Vue components
-├── pages/              # Vue pages
-├── router/             # Vue Router configuration
-├── styles/             # Global styles and Less variables
-├── utils/              # Utility functions and mock data
-├── App.vue             # Main App component
-├── main.ts             # Entry point of the application
-├── global.less         # Global Less variables
-
 ###Uso
 
 - Filtragem de Produtos: Use o menu suspenso para filtrar produtos por categoria.
