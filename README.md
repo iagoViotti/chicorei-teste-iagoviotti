@@ -1,5 +1,55 @@
-# Vue 3 + TypeScript + Vite
+# Teste Técnico - Chico Rei
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Overview
+Esse projeto é uma aplicação de frontend que acomoda duas possíveis páginas de um e-commerce (uma página de produtos e uma página de checkout). A aplicação foi feita usando Vue.js e inclui features como filtro de produtos (via roteamento e falsas chamadas a APIs), edição de carrinhno e validação de campos de input.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Técnilogias usadas
+- Vue.js
+- Vite
+- Less
+- Vue Router
+- Faker.js
+
+## Instruções de instalação
+
+### Prerequisitos
+-Node.js (versão 14 ou maior)
+-npm (versão 6 ou maior)
+
+### Clone o repositório
+
+```bash
+git clone git@github.com:iagoViotti/chicorei-teste-iagoviotti.git
+cd chicorei-teste-iagoviotti
+```
+
+###Instale as dependências
+
+```bash
+npm install
+```
+
+###Rode o projeto
+
+```bash
+npm run dev
+```
+
+###Estrutura do projeto
+
+src/
+├── assets/             # Static assets (images, icons, etc.)
+├── components/         # Vue components
+├── pages/              # Vue pages
+├── router/             # Vue Router configuration
+├── styles/             # Global styles and Less variables
+├── utils/              # Utility functions and mock data
+├── App.vue             # Main App component
+├── main.ts             # Entry point of the application
+├── global.less         # Global Less variables
+
+###Uso
+
+- Filtragem de Produtos: Use o menu suspenso para filtrar produtos por categoria.
+- Gerenciamento do Carrinho: Adicione produtos ao carrinho, ajuste quantidades e remova itens.
+- Finalização da Compra: Preencha as informações de contato, entrega e pagamento para concluir a compra.
