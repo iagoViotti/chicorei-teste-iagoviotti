@@ -37,8 +37,11 @@
     </div>
     <div class="expenses-dashboard">
       <div class="expenses-header">
-        <h2>EXPENSES</h2>
-        <h1>-$898,00</h1>
+        <div class='expenses-header-info'>
+          <h2>EXPENSES</h2>
+          <h1>-$898,00</h1>
+        </div>
+        <img src="../assets/arrow-down.svg" alt="arrowdown" />
       </div>
       <circleChart />
       <!-- <div v-for="expense in expenses">
@@ -202,6 +205,12 @@ const expenses = ref([
   color: black;
 }
 
+.expenses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .expenses-dashboard {
   display: flex;
   flex-direction: column;
@@ -241,5 +250,4 @@ const expenses = ref([
   font-weight: 300;
   color: black;
 }
-
 </style>
