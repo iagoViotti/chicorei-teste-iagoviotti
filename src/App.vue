@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import PersonalizedAlert from './components/PersonalizedAlert.vue';
 import Sidebar from './components/Sidebar.vue';
 import { ref } from 'vue';
+import { useLoadingState } from './utils/loadingState';
+
+const { message } = useLoadingState();
 
 const isSidebarOpen = ref(false);
 const toggleSidebar = () => {
@@ -9,6 +13,7 @@ const toggleSidebar = () => {
 
 </script>
 <template>
+  <PersonalizedAlert :message="message" />
   <Sidebar :is-sidebar-open="isSidebarOpen" />
   <div class="page">
     <header>

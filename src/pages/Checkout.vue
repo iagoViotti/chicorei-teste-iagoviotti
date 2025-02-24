@@ -1,5 +1,5 @@
 <template>
-  <main class="checkout-page">
+  <main class="checkout-page" :class="{ loading }">
     <form @submit.prevent="handleCheckout">
       <h1>Finalização do pedido</h1>
       <div>
@@ -20,7 +20,7 @@
           <input required type="text" v-model="address.street" />
         </label>
         <label for="numero">Número:
-          <input required type="text" />
+          <input required type="text" v-model="address.numero" />
         </label>
         <label for="bairro">Bairro:
           <input required type="text" v-model="address.neighborhood" />
@@ -35,23 +35,23 @@
       <div class="payment-info">
         <h2>Informações de pagamento</h2>
         <label for="card">Número do cartão:
-          <input required type="text" @input="onlyNumberFilter" maxlength="16" minlength="16" />
+          <input v-model="cardNumber" required type="text" @input="onlyNumberFilter" maxlength="16" minlength="16" />
         </label>
         <label for="titular">Titular do cartão:
-          <input required type="text" />
+          <input v-model="cardHolder" required type="text" />
         </label>
         <label for="validade">Validade:
-          <input required v-mask="'##/##'" type="text" />
+          <input v-model="cardExpiry" required v-mask="'##/##'" type="text" />
         </label>
         <label for="cvv">CVV:
-          <input required type="text" maxlength="3" @input="onlyNumberFilter" />
+          <input v-model="cardCVV" required type="text" maxlength="3" @input="onlyNumberFilter" />
         </label>
       </div>
-      <button>Finalizar pedido</button>
+      <button>{{ loading ? '...' : 'Finalizar Pedido' }}</button>
     </form>
     <div class="cart-container">
       <h2>Sacola</h2>
-      <section>
+      <section v-if="cart.length > 0">
         <div v-for="product in cart" :key="product.id">
           <div class="product-card">
             <img :src="product.image" alt="product.name" />
@@ -62,20 +62,23 @@
             <div class="button-container">
               <button @click="addProduct(product)">+</button>
               <span>{{ product.quantity }}</span>
-              <button @click="removeProduct(product)" >-</button>
+              <button @click="removeProduct(product)">-</button>
             </div>
           </div>
         </div>
       </section>
+      <p v-else>Nenhum produto na sacola</p>
     </div>
   </main>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import cep from 'cep-promise';
 import { generateProducts } from '../utils/mocks';
 import { cartMock } from '../utils/cartMock';
+import { useLoadingState } from '../utils/loadingState';
+const { loading, setLoading } = useLoadingState();
 const { cart, removeProduct, addProduct } = cartMock;
 
 const products = ref();
@@ -87,9 +90,31 @@ const address = ref({
   city: '',
   state: '',
 });
+const cardNumber = ref('');
+const cardHolder = ref('');
+const cardExpiry = ref('');
+const cardCVV = ref('');
+
 
 const handleCheckout = () => {
-  console.log('Pedido finalizado!');
+  setLoading('Pedido enviado com sucesso!');
+  resetForm();
+  console.log(cart);
+};
+
+const resetForm = () => {
+  cellphone.value = '';
+  cepValue.value = '';
+  address.value = {
+    street: '',
+    neighborhood: '',
+    city: '',
+    state: '',
+  };
+  cardNumber.value = '';
+  cardHolder.value = '';
+  cardExpiry.value = '';
+  cardCVV.value = '';
 };
 
 const searchCEP = async () => {
@@ -101,14 +126,9 @@ const searchCEP = async () => {
       city: response.city,
       state: response.state,
     };
-    console.log(address.value);
   } catch (error) {
     console.error(error);
   }
-};
-
-const onlyNumberFilter = (e) => {
-  e.target.value = e.target.value.replace(/\D/g, '');
 };
 
 </script>
@@ -141,7 +161,6 @@ form div {
 .cart-container {
   overflow-y: scroll;
   height: 90%;
-  /* background-color: red; */
 }
 
 .product-card {
@@ -195,7 +214,4 @@ h3 {
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-}
 </style>
