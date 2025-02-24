@@ -34,8 +34,19 @@ npm install
 ```bash
 npm run dev
 ```
-###Uso
+## Uso
 
 - Filtragem de Produtos: Use o menu suspenso para filtrar produtos por categoria.
 - Gerenciamento do Carrinho: Adicione produtos ao carrinho, ajuste quantidades e remova itens.
 - Finalização da Compra: Preencha as informações de contato, entrega e pagamento para concluir a compra.
+
+### Estrutura do Projeto
+```
+src/
+├── assets/             # Static assets (images, icons, etc.)
+├── components/         # Vue components
+├── pages/              # Vue pages
+├── utils/              # Utility functions and mock data
+├── App.vue             # Main App component
+├── main.ts             # Entry point of the application
+├── global.less         # Global Less variables
