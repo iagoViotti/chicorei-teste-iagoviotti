@@ -35,7 +35,7 @@ export default {
 <style lang="less">
 .navbar-open {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  color: #333;
+  color: @text-color;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
