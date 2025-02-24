@@ -9,6 +9,7 @@
       </div>
       <router-link @click="toggleSidebar" to="/">Home</router-link>
       <router-link @click="toggleSidebar" to="/checkout">Checkout</router-link>
+      <router-link @click="toggleSidebar" to="/bonus">Questão extra</router-link>
     </div>
   </Transition>
 </template>
