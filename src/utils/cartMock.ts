@@ -39,6 +39,33 @@ export const cartProducts = reactive<CartProduct[]>([
     category: 'accessories',
     quantity: 1,
   },
+  {
+    id: 5,
+    name: 'sweatshirt',
+    price: '15',
+    image: faker.image.urlLoremFlickr({ width: 200, height: 200 }),
+    description: 'This is a sweatshirt',
+    category: 'shirts',
+    quantity: 1,
+  },
+  {
+    id: 6,
+    name: 'Jacket',
+    price: '25',
+    image: faker.image.urlLoremFlickr({ width: 200, height: 200 }),
+    description: 'This is a jacket',
+    category: 'shirts',
+    quantity: 1,
+  },
+  {
+    id: 7,
+    name: 'Shorts',
+    price: '10',
+    image: faker.image.urlLoremFlickr({ width: 200, height: 200 }),
+    description: 'This is a pair of shorts',
+    category: 'pants',
+    quantity: 1,
+  },
 ]);
 
 const addProduct = (product: Product) => {

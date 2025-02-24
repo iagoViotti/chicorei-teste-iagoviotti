@@ -1,13 +1,15 @@
 <template>
-  <main>
-    <select v-model='selectedCategory' @change='navToCategory'>
-      <option value='shirts' selected>Shirts</option>
-      <option value='pants'>Pants</option>
-      <option value='accessories'>Accessories</option>
-    </select>
+  <div class="home-content">
+    <div class="filter-div">
+      <select v-model='selectedCategory' @change='navToCategory'>
+        <option value='shirts' selected>Shirts</option>
+        <option value='pants'>Pants</option>
+        <option value='accessories'>Accessories</option>
+      </select>
+    </div>
     <section>
-      <div v-for="product in products" :key="product.id" class="grid-cell">
-        <div class="product-card">
+      <div v-for="product in products" :key="product.id">
+        <div class="product-card" @click="() => console.log(product)">
           <img :src="product.image" alt="product.name" />
           <div class="info">
             <h2>{{ product.name }}</h2>
@@ -17,7 +19,7 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script setup>
@@ -57,37 +59,47 @@ const print = () => {
 
 </script>
 
-<style scoped>
-main {
-  padding: 1em;
+<style lang="less">
+.filter-div {
+  display: flex;
+  padding: 1em 8%;
+}
+
+select {
+  font-size: 1em;
+  padding: 5px 10px;
   box-sizing: border-box;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  width: 100%;
+  margin: 0 2em;
+  border-radius: 10px;
+  background-color: @secondary-background-color;
+  border-color: @text-color;
+  width: fit-content;
+  color: @text-color;
 }
 
 section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  display: flex;
+  flex-direction: column;
+  padding: 1em 1em;
+  box-sizing: border-box;
   gap: 1.2em;
-  /* overflow-y: scroll; */
   height: 100%;
 }
 
-.grid-cell {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+@media screen and (min-width: 1000px) {
+  section {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 .product-card {
   max-width: 400px;
   display: flex;
-  border-radius: 5px;
-  box-sizing: border-box;
-  width: 100%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-bottom: 1px solid @primary-color;
+  cursor: pointer;
 }
 
 .info {
@@ -98,11 +110,9 @@ section {
 }
 
 img {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 150px;
+  max-height: 150px;
   border-radius: 5px 5px 0 0;
-  object-fit: cover;
-  flex-shrink: 0;
 }
 
 .product-card h2 {
@@ -132,4 +142,13 @@ small {
   align-self: flex-end;
   font-weight: bold;
 }
+
+// ::-webkit-scrollbar {
+//   width: 10px;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//   background-color: @light-accent-color;
+//   border-radius: 5px;
+// }
 </style>

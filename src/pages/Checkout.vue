@@ -1,8 +1,9 @@
 <template>
-  <main class="checkout-page" :class="{ loading }">
+  <div class="checkout-content">
     <form @submit.prevent="handleCheckout">
       <h1>Finalização do pedido</h1>
       <div>
+        <h2>Informações de contato</h2>
         <label for="name">E-mail:
           <input required type="email" />
         </label>
@@ -13,8 +14,12 @@
       <div class="delivery-info">
         <h2>Informações de entrega</h2>
         <label for="cep">CEP:
-          <input required type="text" v-model="cepValue" v-mask="'#####-###'" />
-          <button type="button" @click="searchCEP">Buscar CEP</button>
+          <div class="cep-input">
+            <input required type="text" v-model="cepValue" v-mask="'#####-###'" />
+            <button type="button" class="cep-button" @click="searchCEP">
+              <img :src="magnifier" alt="Buscar CEP" />
+            </button>
+          </div>
         </label>
         <label for="rua">Rua:
           <input required type="text" v-model="address.street" />
@@ -47,29 +52,33 @@
           <input v-model="cardCVV" required type="text" maxlength="3" @input="onlyNumberFilter" />
         </label>
       </div>
-      <button>{{ loading ? '...' : 'Finalizar Pedido' }}</button>
+      <button class="checkout-button">{{ loading ? '...' : 'Finalizar Pedido' }}</button>
     </form>
     <div class="cart-container">
-      <h2>Sacola</h2>
-      <section v-if="cart.length > 0">
+      <h2>Carrinho</h2>
+      <section class="cart-section" v-if="cart.length > 0">
         <div v-for="product in cart" :key="product.id">
-          <div class="product-card">
+          <div class="cart-product-card">
             <img :src="product.image" alt="product.name" />
             <div class="info">
               <h3>{{ product.name }}</h3>
               <p>R$ {{ product.price }}</p>
             </div>
             <div class="button-container">
-              <button @click="addProduct(product)">+</button>
+              <button @click="addProduct(product)">
+                <img :src="plus" alt="Adicionar" />
+              </button>
               <span>{{ product.quantity }}</span>
-              <button @click="removeProduct(product)">-</button>
+              <button @click="removeProduct(product)">
+                <img :src="minus" alt="Remover" />
+              </button>
             </div>
           </div>
         </div>
       </section>
       <p v-else>Nenhum produto na sacola</p>
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup>
@@ -80,6 +89,9 @@ import { cartMock } from '../utils/cartMock';
 import { useLoadingState } from '../utils/loadingState';
 const { loading, setLoading } = useLoadingState();
 const { cart, removeProduct, addProduct } = cartMock;
+import magnifier from '../assets/magnifier.svg';
+import plus from '../assets/plus.svg';
+import minus from '../assets/minus.svg';
 
 const products = ref();
 const cellphone = ref('');
@@ -133,24 +145,42 @@ const searchCEP = async () => {
 
 </script>
 
-<style scoped>
-.checkout-page {
+<style lang="less">
+.checkout-content {
   display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  columns: 2;
+  flex-direction: column-reverse;
+  align-items: center;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  padding: 1em;
   box-sizing: border-box;
+  width: 100%;
+}
+
+.cart-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cart-section {
+  height: 40vh;
+  width: 100%;
+  overflow-y: scroll;
+  border-radius: 10px;
 }
 
 form label {
   display: flex;
   justify-content: space-between;
+  padding: 0 1em;
+  color: @accent-color;
+}
+
+form input {
+  padding: 0.5em;
+  margin: 0.2em;
 }
 
 form div {
@@ -158,12 +188,7 @@ form div {
   flex-direction: column;
 }
 
-.cart-container {
-  overflow-y: scroll;
-  height: 90%;
-}
-
-.product-card {
+.cart-product-card {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -171,29 +196,62 @@ form div {
   border-radius: 5px;
   box-sizing: border-box;
   width: 100%;
-  margin: 1em 0;
-  box-sizing: border-box;
+  padding: 1em;
 }
 
-.product-card img {
+.cart-product-card img {
   max-width: 100px;
   max-height: 100px;
   border-radius: 5px 5px 0 0;
 }
 
-.info {
+.cart-product-card .info {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
   text-align: start;
   width: 100%;
-  box-sizing: border-box;
   padding: 0 1em;
+  box-sizing: border-box;
 }
 
-h3 {
+.cart-product-card button {
+  padding: 0.5em 0.8em;
+  border-radius: 5px;
+  background-color: @accent-color;
+  color: @primary-color;
+  cursor: pointer;
+}
+
+.cart-product-card span {
+  padding: 0.5em 0.7em;
+  border-radius: 5px;
+  background-color: @secondary-background-color;
+  color: @text-color;
+}
+
+.cart-product-card p {
   margin: 0;
+  font-weight: 600;
+}
+
+.checkout-content h1 {
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  padding: 0.2em;
+  background-color: @primary-color;
+}
+
+.checkout-content h3 {
+  font-size: 1.3em;
+  margin: 0;
+}
+
+.checkout-content h2 {
+  margin: 0;
+  margin-bottom: 0.5em;
+  padding: 0.2em;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 }
 
 .button-container {
@@ -205,12 +263,57 @@ h3 {
   padding: 0 1em;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
+.cep-button {
+  border: none;
+  border-radius: 5px;
+  background-color: @secondary-background-color;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 5px;
+.cep-input {
+  display: flex;
+  flex-direction: row;
+}
+
+.checkout-button {
+  margin: 1em;
+  padding: 0.5em;
+  border-radius: 10px;
+  background-color: @accent-color;
+  color: @primary-color;
+  font-size: 1.2em;
+  border: none;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 1000px) {
+  .checkout-content {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  form {
+    width: 40%;
+    max-width: 400px;
+  }
+
+  .cart-container {
+    max-width: 40%;
+  }
+
+  .cart-section {
+    height: 60vh;
+  }
+
+  .checkout-button {
+    padding: 0.5em 2em;
+    width: fit-content;
+  }
+
+  .checkout-content h1 {
+    box-shadow: none;
+    font-size: 2.2em;
+    background-color: transparent;
+  }
+
 }
 </style>
