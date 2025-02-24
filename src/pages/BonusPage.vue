@@ -3,7 +3,7 @@
     <div class="header">
       <div>
         <h4>INCOME</h4>
-        <h1>R$ 567,00</h1>
+        <h1>$567,00</h1>
       </div>
       <h2>LOGO</h2>
     </div>
@@ -29,27 +29,27 @@
     <div class="income-dashboard">
       <div class="dashboard-header">
         <h2>INCOME</h2>
-        <h1>R$ 1567,00</h1>
+        <h1>$1567,00</h1>
       </div>
       <div clas="graph-div">
         <lineChart />
       </div>
     </div>
     <div class="expenses-dashboard">
-      <div>
+      <div class="expenses-header">
         <h2>EXPENSES</h2>
-        <h1>R$ 898,00</h1>
+        <h1>-$898,00</h1>
       </div>
-      <img src="../assets/arrow-down.svg" alt="graph" />
-    </div>
-    <div v-for="expense in expenses">
-      <div>
-        <h3>{{ expense.name }}</h3>
-        <p>{{ expense.category }}</p>
-      </div>
-      <div>
-        <h3>R$ {{ expense.value }}</h3>
-      </div>
+      <circleChart />
+      <!-- <div v-for="expense in expenses">
+        <div>
+          <h3>{{ expense.name }}</h3>
+          <p>{{ expense.category }}</p>
+        </div>
+        <div>
+          <h3>${{ expense.value }}</h3>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -57,6 +57,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import lineChart from '../components/lineChart.vue';
+import circleChart from '../components/circleChart.vue';
 
 const expenses = ref([
   {
@@ -91,7 +92,7 @@ const expenses = ref([
 <style lang="less">
 .app-finance {
   background: rgb(56, 56, 56);
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0) 80%, rgba(119, 108, 230, 1) 88%);
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0) 56%, rgba(119, 108, 230, 1) 80%);
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -173,11 +174,12 @@ const expenses = ref([
   display: flex;
   flex-direction: column;
   padding: 20px;
+  padding-bottom: 40px;
   background-color: white;
   width: 80%;
   justify-self: center;
   align-self: center;
-  border-radius: 20px;
+  border-radius: 25px;
 }
 
 .dashboard-header {
@@ -187,7 +189,7 @@ const expenses = ref([
 }
 
 .income-dashboard h2 {
-  font-size: 1.1em;
+  font-size: 0.8em;
   margin: 0;
   font-weight: 300;
   color: black;
@@ -199,4 +201,45 @@ const expenses = ref([
   font-weight: 300;
   color: black;
 }
+
+.expenses-dashboard {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  width: 80%;
+  justify-self: center;
+  align-self: center;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.expenses-dashboard h2 {
+  font-size: 0.8em;
+  margin: 0;
+  font-weight: 300;
+  color: black;
+}
+
+.expenses-dashboard h1 {
+  font-size: 2.3em;
+  margin: 0;
+  font-weight: 400;
+  color: black;
+}
+
+.expenses-dashboard h3 {
+  font-size: 1em;
+  margin: 0;
+  font-weight: 400;
+  color: black;
+}
+
+.expenses-dashboard p {
+  font-size: 0.8em;
+  margin: 0;
+  font-weight: 300;
+  color: black;
+}
+
 </style>
