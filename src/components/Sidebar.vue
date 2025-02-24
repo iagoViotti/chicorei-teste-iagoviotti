@@ -7,8 +7,8 @@
           <img v-show="isSidebarOpen" :src="closeIcon" alt="Close" />
         </button>
       </div>
-      <router-link to="/">Home</router-link>
-      <router-link to="/checkout">Checkout</router-link>
+      <router-link @click="toggleSidebar" to="/">Home</router-link>
+      <router-link @click="toggleSidebar" to="/checkout">Checkout</router-link>
     </div>
   </Transition>
 </template>
