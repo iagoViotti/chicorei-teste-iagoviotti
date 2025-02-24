@@ -5,7 +5,6 @@
       <option value='pants'>Pants</option>
       <option value='accessories'>Accessories</option>
     </select>
-    <!-- <button @click="print">Print</button> -->
     <section>
       <div v-for="product in products" :key="product.id" class="grid-cell">
         <div class="product-card">
@@ -63,6 +62,7 @@ main {
   padding: 1em;
   box-sizing: border-box;
   overflow-y: scroll;
+  overflow-x: hidden;
   width: 100%;
 }
 

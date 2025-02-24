@@ -1,8 +1,23 @@
+<template>
+  <PersonalizedAlert :message="message" />
+  <Sidebar :is-sidebar-open="isSidebarOpen" @toggle-sidebar="toggleSidebar"/>
+  <div class="page">
+    <header>
+      <h1>e-commerce</h1>
+      <button v-if="!isSidebarOpen" @click='toggleSidebar'><img :src="menu" alt="Menu" /></button>
+    </header>
+    <main class="content">
+      <router-view />
+    </main>
+  </div>
+</template>
+
 <script setup lang="ts">
 import PersonalizedAlert from './components/PersonalizedAlert.vue';
 import Sidebar from './components/Sidebar.vue';
 import { ref } from 'vue';
 import { useLoadingState } from './utils/loadingState';
+import menu from './assets/menu.svg'
 
 const { message } = useLoadingState();
 
@@ -12,34 +27,24 @@ const toggleSidebar = () => {
 };
 
 </script>
-<template>
-  <PersonalizedAlert :message="message" />
-  <Sidebar :is-sidebar-open="isSidebarOpen" />
-  <div class="page">
-    <header>
-      <button @click='toggleSidebar'>Click me</button>
-      <h1>Francisco, O Monarca</h1>
-    </header>
-    <main class="content">
-      <router-view />
-    </main>
-  </div>
-</template>
 
-<style scoped>
+<style lang="less">
 header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-}
-
-header button {
-  justify-self: flex-start;
+  flex-direction: row-reverse;
 }
 
 header h1 {
   margin: 0.5em 0.5em;
-  flex: 1;
   text-align: end;
+}
+
+header button {
+  border-radius: 10px;
+  background-color: @background-color;
+  border: none;
 }
 
 .page {
