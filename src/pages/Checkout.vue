@@ -1,7 +1,7 @@
 <template>
+  <h1>Finalização do pedido</h1>
   <div class="checkout-content">
     <form @submit.prevent="handleCheckout">
-      <h1>Finalização do pedido</h1>
       <div>
         <h2>Informações de contato</h2>
         <label for="name">E-mail:
@@ -57,7 +57,7 @@
     <div class="cart-container">
       <h2>Carrinho</h2>
       <section class="cart-section" v-if="cart.length > 0">
-        <div v-for="product in cart" :key="product.id">
+        <div v-for="product in cart" :key="product.id" class="cart-product-container">
           <div class="cart-product-card">
             <img :src="product.image" alt="product.name" />
             <div class="info">
@@ -164,6 +164,10 @@ form {
   box-sizing: border-box;
 }
 
+.cart-product-container {
+  width: 100%;
+}
+
 .cart-section {
   height: 40vh;
   width: 100%;
@@ -249,9 +253,9 @@ form div {
 
 .checkout-content h2 {
   margin: 0;
-  margin-bottom: 0.5em;
   padding: 0.2em;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  // box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 }
 
 .button-container {

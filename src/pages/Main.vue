@@ -1,4 +1,9 @@
 <template>
+  <Sidebar :is-sidebar-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+  <header>
+    <h1>Chicochico</h1>
+    <button v-if="!isSidebarOpen" @click='toggleSidebar'><img :src="menu" alt="Menu" /></button>
+  </header>
   <div class="home-content">
     <div class="filter-div">
       <select v-model='selectedCategory' @change='navToCategory'>
@@ -26,6 +31,13 @@
 import { ref, computed, watch } from 'vue';
 import { generateProducts } from '../utils/mocks';
 import { useRouter, useRoute } from 'vue-router';
+import Sidebar from '../components/Sidebar.vue';
+import menu from '../assets/menu.svg';
+
+const isSidebarOpen = ref(false);
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value;
+};
 
 const router = useRouter();
 const route = useRoute();
@@ -150,5 +162,4 @@ small {
 // ::-webkit-scrollbar-thumb {
 //   background-color: @light-accent-color;
 //   border-radius: 5px;
-// }
-</style>
+// }</style>
